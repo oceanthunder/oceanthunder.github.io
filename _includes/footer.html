@@ -1,0 +1,37 @@
+<footer class="site-footer h-card">
+  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Behold, the Footer of Sacred Links</h2>
+
+    <div class="footer-col-wrapper">
+      <!-- Contact Information -->
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{{ site.name }}</li>
+          {%- if site.email -%}
+          <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          {%- endif -%}
+          <li>
+            <a href="{{ '/feed.xml' | relative_url }}" title="Subscribe to RSS feed" class="rss-link">
+              RSS feed
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Social Links -->
+      <div class="footer-col footer-col-2">
+        {%- include social.html -%}
+      </div>
+
+      <!-- Site Description -->
+      <div class="footer-col footer-col-3">
+        <p>{{- site.description | escape -}}</p>
+      </div>
+    </div>
+
+  </div>
+</footer>
+

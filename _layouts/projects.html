@@ -1,0 +1,127 @@
+---
+layout: default
+---
+
+<body>
+  <div style="max-width: 1140px; margin: 2rem auto; padding: 0 15px;">
+    <div style="display: flex; flex-wrap: wrap; margin: -15px;">
+      <!-- Card 1 -->
+      <div class="card-item">
+        <div class="card">
+          <img src="kubrick.png" alt="Project Kubrick">
+          <div class="card-body">
+            <h5>Kubrick</h5>
+            <p>A Hugging Face Space using Gradio for interfacing with a cosine similarity-based movie recommendation model.</p>
+            <a href="https://huggingface.co/spaces/sahilgarje/Kubrick">View Project</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Repeat for other cards -->
+      <div class="card-item">
+        <div class="card">
+          <img src="textmonger.png" alt="Project Text Monger">
+          <div class="card-body">
+            <h5>The Text Monger</h5>
+            <p>A Python package that provides readability scoring, power words distribution, named entity recognition (NER), and sentiment polarity in a TERMINAL!</p>
+            <a href="https://pypi.org/project/textmonger/">View Project</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-item">
+        <div class="card">
+          <img src="peanutbutter.png" alt="Project MrPeanutButter_Bot">
+          <div class="card-body">
+            <h5>MrPeanutButter_Bot</h5>
+            <p>A Reddit bot that interacts with the r/BojackHorseman subreddit. It looks for comments mentioning his or other related characters' name and replies with a random image and a random text (a very Todd idea).</p>
+            <a href="https://www.reddit.com/user/MrPeanutButter_Bot/">View Project</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-item">
+        <div class="card">
+          <img src="archlinux.png" alt="Project The LiZard Witchy">
+          <div class="card-body">
+            <h5>The LiZard Witchy</h5>
+            <p>A website I created using HTML/CSS and Javascript that contains configs/tweaks and acts as a general guide for a minimal & functional Arch + i3wm setup.</p>
+            <a href="https://oceanthunder.github.io/lizardwitchy/">View Project</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-item">
+        <div class="card">
+          <img src="ponpon.png" alt="Project Ponpon Shit">
+          <div class="card-body">
+            <h5>Ponpon Shit: An Edgerunner's Summary</h5>
+            <p>A scratch project I made that summarizes the anime 'Cyberpunk Edgerunners' in an animated and satirical way.</p>
+            <a href="https://youtu.be/rogfSJwxPqU?feature=shared">View Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inline styles for responsiveness -->
+  <style>
+    .card-item {
+      flex: 0 0 100%; /* Default: Full-width for mobile */
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .card-body h5 {
+      margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    .card-body p {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      color: #6c757d;
+    }
+
+    .card-body a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      color: #fff;
+      background-color: #343a40;
+      text-decoration: none;
+      border-radius: 0.25rem;
+    }
+
+    @media (min-width: 576px) {
+      .card-item {
+        flex: 0 0 50%; /* Half-width on small screens (>=576px) */
+      }
+    }
+
+    @media (min-width: 992px) {
+      .card-item {
+        flex: 0 0 50%; /* Two cards per row (>=992px) */
+      }
+    }
+  </style>
+</body>
+
