@@ -23,7 +23,7 @@ email: sahilgarje@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   A site made by human.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://oceanthunder.dev" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://oceanthunder.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: oceanthunder
 linkedin_username: oceanthunder 
 
