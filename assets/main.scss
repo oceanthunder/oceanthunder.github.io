@@ -1,0 +1,164 @@
+---
+---
+
+@import "minima";
+
+/**
+ * Page content
+ */
+.page-content {
+  padding: 30px;
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px; 
+}
+
+.page-heading {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.post-list-heading {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.post-list {
+  margin-left: 0;
+  list-style: none;
+}
+
+.post-list > li {
+  margin-bottom: 20px; 
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.post-list > li:hover {
+  background-color: #f0f0f0;
+}
+
+.post-meta {
+  font-size: 14px;
+  color: #828282;
+}
+
+.post-link {
+  display: block;
+  font-size: 24px;
+  color: grey !important;
+  text-decoration: none !important;
+}
+
+.post-link:hover,
+.post-link:focus {
+  color: black !important;
+}
+
+
+/**
+ * Footer 
+ */
+.site-footer {
+  border-top: 1px solid #e8e8e8;
+  padding: 15px 0; 
+  font-size: 14px; 
+  color: #555;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.footer-heading {
+  font-size: 16px; 
+  font-weight: 600; 
+  margin-bottom: 8px; 
+  color: #333; 
+}
+
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-list li,
+.social-media-list li {
+  margin: 3px 0; 
+}
+
+.footer-col-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; 
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 120px;
+  margin-bottom: 10px; 
+}
+
+.site-footer a {
+  color: #555; 
+  text-decoration: none;
+  transition: color 0.2s ease; 
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  color: #000;
+}
+
+@media screen and (max-width: 800px) {
+  .footer-col-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .footer-col {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .site-footer {
+    padding: 10px 0;
+  }
+  .footer-heading {
+    font-size: 14px;
+  }
+  .footer-col {
+    margin-bottom: 5px;
+  }
+  .contact-list li,
+  .social-media-list li {
+    margin: 2px 0;
+  }
+}
+
+/**
+ *links on the posts in a box
+ */
+.post-content a {
+  display: inline-block;
+  padding: 1px 1px; 
+  border-radius: 4px;
+  background-color: #333;
+  color: #eee; 
+  text-decoration: none; 
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #eee;
+    color: #333; 
+  }
+}
+

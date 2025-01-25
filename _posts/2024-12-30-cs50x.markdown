@@ -1,0 +1,50 @@
+---
+layout: post
+title:  "After a Year, I Finally Finished CS50x — Here’s Everything I Built!"
+description: "A journey through the Harvard's CS50x course over the span of a year"
+url: "https://oceanthunder.dev"
+logo: "/assets/oceanthunder.png"
+date:   2024-12-30 21:14:05 +0530
+categories: cs50x programming projects
+---
+
+# Embarking on CS50x
+
+Embarking on CS50x was one of the best decisions of my life — right up there with not dying and figuring out how to make Maggi in under two minutes. Over the past year, I’ve learned more from this single course than my entire fkin college education — seriously, what are they even teaching us? Along the way, I built some projects so cool they made me question if I might actually have a future as a functioning adult.
+
+I started CS50x in January 2024, with my first submission on February 12 (the Scratch project), and wrapped up yesterday, December 29.
+
+## PSET 1: The Scratch AMV Saga
+
+For my first project, I created a satirical summary (basically an AMV) of the anime *Cyberpunk Edgerunners* using Scratch. Yes, Scratch — the tool made for kids — but don’t let that fool you; this thing slaps. Since Scratch isn’t exactly known for video playback, here’s the [YouTube link](https://www.youtube.com/watch?feature=shared&v=rogfSJwxPqU) and [Scratch link](https://scratch.mit.edu/projects/931259605/). Go ahead and judge me.
+
+## C, or the Lack Thereof
+
+I didn’t do any projects in C because, frankly, nothing interesting came to mind. Instead, I spent my time exploring its successor, C++, on [LearnCPP](https://learncpp.com) — which, subjectively, felt like a more useful detour anyway.
+
+## Enter Python: APIs and Reddit Bots
+
+After finishing the 6th lecture of CS50x (Python), I went on what I can only describe as an API bender. I discovered the magic of APIs, and before I knew it, I had created a Reddit bot! Meet [MrPeanutButter_Bot](https://www.reddit.com/user/MrPeanutButter_Bot/) — a little piece of code that brings *BoJack Horseman* vibes to Reddit.
+
+## The CS50p Detour
+
+By the time I finished the 6th PSET, half the year had passed, and I decided to take a detour into CS50p. No reason, really. Just vibes. And it was fire. For my final project, I made a Python package for text analysis (nothing groundbreaking, but hey, it works). Here’s the [PyPI link](https://pypi.org/project/textmonger/).
+
+CS50p was way easier than CS50x — maybe because I’d already wrestled with C at this point. I breezed through it in about 2–3 months before returning to CS50x in August.
+
+## Linux, Open Source, and Arch Shenanigans
+
+By Week 8, I had fallen headfirst into the Linux and open-source rabbit hole. I learned about GitHub Pages and decided to get fancy with my PSET. I made a portfolio (not this one, I probably have already stopped using it by the time you read this) and a minimalistic Arch Linux configs site called [The LiZard Witchy](https://oceanthunder.github.io/lizardwitchy/). Don’t ask about the name; it just felt right (Linux + Wizard + Witch + I forgot what the y was for).
+
+## The Final Stretch: Kubrick
+
+In late November, I began ideating for the final project. After a month of brainstorming and skill-building, I created [Kubrick](https://huggingface.co/spaces/sahilgarje/Kubrick): a Hugging Face Space that uses Gradio to interface with a cosine similarity-based movie recommendation model. Sure, you could find a million YouTube videos on building a movie recommender, but I’m still weirdly proud of it.
+
+## Reflecting on the Journey
+
+Now that it’s over, I feel… nostalgic? Sad? Existential? Honestly, the certificate feels like a formality compared to everything I learned and built along the way. This course wasn’t just a course — it was a journey.
+
+CS50x isn’t just a 10/10. It’s a 50/10. And I’d do it all over again.
+
+![My CS50x certificate](/assets/blog1/cs50x.jpg)
+
