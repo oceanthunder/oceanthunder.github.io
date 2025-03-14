@@ -221,14 +221,13 @@ button:hover {
 .site-title {
   font-size: 28px; /* Adjust size if needed */
   font-weight: bold;
-  color: var(--text-color); /* Adapts to dark mode */
+  color: var(--post-link) !important; /* Adapts to dark mode */
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 .site-title:hover,
 .site-title:focus {
-  color: var(--post-link-hover); /* Light mode: black, Dark mode: white */
+  color: var(--post-link-hover) !important; /* Light mode: black, Dark mode: white */
   text-decoration: none;
 }
 .page-link {
@@ -277,7 +276,6 @@ a:hover {
   opacity: 0.7;
 }
 
-/* Ensure the button stays in place on mobile */
 @media screen and (max-width: 600px) {
   #dark-mode-toggle {
     font-size: 18px;
@@ -287,3 +285,18 @@ a:hover {
   }
 }
 
+
+@media screen and (max-width: 600px) {
+  .site-nav {
+    background: var(--bg-color) !important; /* Ensures correct background in dark mode */
+  }
+
+  .site-nav .page-link {
+    color: var(--text-color) !important; /* Ensures text is visible */
+  }
+
+  .site-nav .page-link:hover,
+  .site-nav .page-link:focus {
+    color: var(--post-link-hover) !important;
+  }
+}
