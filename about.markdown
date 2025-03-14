@@ -23,5 +23,3 @@ Do I have any goals, you ask? Yeah, like making Neptune a planet again and switc
 ### Interests  
 
 I like to exist and think and see the world [prospering or otherwise].  
-
----
