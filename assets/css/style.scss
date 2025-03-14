@@ -200,14 +200,11 @@ button:hover {
   display: inline-block;
   padding: 1px 1px; 
   border-radius: 4px;
-  background-color: var(--post-link-hover);
   color: var(--post-link);
   text-decoration: none; 
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .post-content a:hover {
-  background-color: var(--post-link);
   color: var(--post-link-hover); 
 }
 .page-link {
@@ -232,6 +229,7 @@ button:hover {
 .site-title:hover,
 .site-title:focus {
   color: var(--post-link-hover); /* Light mode: black, Dark mode: white */
+  text-decoration: none;
 }
 .page-link {
   color: var(--text-color) !important; /* Ensures it is always visible */
