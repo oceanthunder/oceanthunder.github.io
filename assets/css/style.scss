@@ -300,3 +300,78 @@ a:hover {
     color: var(--post-link-hover) !important;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.card-item {
+  flex: 0 0 100%; /* Default: Full-width for mobile */
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.card {
+  border: 1px solid var(--box-border);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px var(--box-shadow);
+  background-color: var(--box-bg);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-body h5 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.card-body p {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  color: var(--post-meta);
+}
+
+.card-body a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: var(--button-text);
+  background-color: var(--button-bg);
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+@media (min-width: 576px) {
+  .card-item {
+    flex: 0 0 50%; /* Half-width on small screens (>=576px) */
+  }
+}
+
+@media (min-width: 992px) {
+  .card-item {
+    flex: 0 0 50%; /* Two cards per row (>=992px) */
+  }
+}
