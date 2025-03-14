@@ -301,22 +301,6 @@ a:hover {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .card-item {
   flex: 0 0 100%; /* Default: Full-width for mobile */
   padding: 15px;
@@ -375,3 +359,9 @@ a:hover {
     flex: 0 0 50%; /* Two cards per row (>=992px) */
   }
 }
+
+
+.site-header {
+    border-bottom: 1px solid var(--box-border) !important;
+}
+
