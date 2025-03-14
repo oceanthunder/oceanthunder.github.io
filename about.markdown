@@ -8,6 +8,8 @@ permalink: /about/
 
 # **Hi, I'm Sahil Garje**  
 
+darkseid is with us.
+
 I’m a human who learns about rocks—rocks that have done some crazy things, like mapping the human genome, creating virtual worlds, and putting a man on the [censored words are strong and this feat of humanity requires such mighty words, but it's an about section which is supposed to be formal, so imagine any taboo word here] MOON! And no, this isn’t about a Dwayne Johnson cameo; I’m obviously talking about computers.  
 
 ### School  
