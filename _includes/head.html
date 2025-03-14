@@ -12,4 +12,28 @@
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
   {%- endif -%}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const darkModeToggle = document.getElementById("dark-mode-toggle");
+    const darkModeIcon = document.getElementById("dark-mode-icon");
+
+    function updateDarkModeIcon() {
+      darkModeIcon.textContent = document.documentElement.classList.contains("dark-mode") ? "●" : "○";
+    }
+
+    if (localStorage.getItem("theme") === "dark" || 
+        (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark-mode");
+    }
+
+    updateDarkModeIcon();
+
+    darkModeToggle.addEventListener("click", function () {
+      document.documentElement.classList.toggle("dark-mode");
+      localStorage.setItem("theme", document.documentElement.classList.contains("dark-mode") ? "dark" : "light");
+      updateDarkModeIcon();
+    });
+  });
+</script>
 </head>
