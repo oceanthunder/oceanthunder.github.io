@@ -1,0 +1,262 @@
+---
+---
+
+@import "minima";
+
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --box-bg: #ffffff;
+  --box-border: #e8e8e8;
+  --box-shadow: rgba(0, 0, 0, 0.1);
+  --hover-bg: #f0f0f0;
+  --footer-bg: #f9f9f9;
+  --footer-text: #555;
+  --post-link: grey;
+  --post-link-hover: black;
+  --post-meta: #828282;
+  --button-bg: black;
+  --button-text: white;
+}
+
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --box-bg: #1e1e1e;
+  --box-border: #333;
+  --box-shadow: rgba(255, 255, 255, 0.1);
+  --hover-bg: #292929;
+  --footer-bg: #1a1a1a;
+  --footer-text: #bbb;
+  --post-link: #c0c0c0;
+  --post-link-hover: #ffffff;
+  --post-meta: #aaaaaa;
+  --button-bg: white;
+  --button-text: black;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Button */
+button {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 5px;
+  transition: background 0.3s, color 0.3s;
+}
+
+button:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+/* Page content */
+.page-content {
+  padding: 30px;
+  flex: 1;
+  background-color: var(--box-bg);
+  border: 1px solid var(--box-border);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px var(--box-shadow);
+  margin: 20px; 
+}
+
+.page-heading {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.post-list-heading {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.post-list {
+  margin-left: 0;
+  list-style: none;
+}
+
+.post-list > li {
+  margin-bottom: 20px; 
+  padding: 15px;
+  background-color: var(--box-bg);
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.post-list > li:hover {
+  background-color: var(--hover-bg);
+}
+
+/* Post meta */
+.post-meta {
+  font-size: 14px;
+  color: var(--post-meta);
+}
+
+/* Post links */
+.post-link {
+  display: block;
+  font-size: 24px;
+  color: var(--post-link) !important;
+  text-decoration: none !important;
+}
+
+.post-link:hover,
+.post-link:focus {
+  color: var(--post-link-hover) !important;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--box-border);
+  padding: 15px 0; 
+  font-size: 14px; 
+  color: var(--footer-text);
+  background-color: var(--footer-bg);
+  text-align: center;
+}
+
+.footer-heading {
+  font-size: 16px; 
+  font-weight: 600; 
+  margin-bottom: 8px; 
+  color: var(--text-color); 
+}
+
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-list li,
+.social-media-list li {
+  margin: 3px 0; 
+}
+
+.footer-col-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; 
+  flex-wrap: wrap;
+}
+
+.footer-col {
+  flex: 1;
+  min-width: 120px;
+  margin-bottom: 10px; 
+}
+
+.site-footer a {
+  color: var(--footer-text); 
+  text-decoration: none;
+  transition: color 0.2s ease; 
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  color: var(--text-color);
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 800px) {
+  .footer-col-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .footer-col {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .site-footer {
+    padding: 10px 0;
+  }
+  .footer-heading {
+    font-size: 14px;
+  }
+  .footer-col {
+    margin-bottom: 5px;
+  }
+  .contact-list li,
+  .social-media-list li {
+    margin: 2px 0;
+  }
+}
+
+/* Post content links */
+.post-content a {
+  display: inline-block;
+  padding: 1px 1px; 
+  border-radius: 4px;
+  background-color: var(--post-link-hover);
+  color: var(--post-link);
+  text-decoration: none; 
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.post-content a:hover {
+  background-color: var(--post-link);
+  color: var(--post-link-hover); 
+}
+.page-link {
+  color: var(--post-link) !important; /* Ensures it applies in both modes */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.page-link:hover,
+.page-link:focus {
+  color: var(--post-link-hover) !important;
+}
+
+.site-title {
+  font-size: 28px; /* Adjust size if needed */
+  font-weight: bold;
+  color: var(--text-color); /* Adapts to dark mode */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-title:hover,
+.site-title:focus {
+  color: var(--post-link-hover); /* Light mode: black, Dark mode: white */
+}
+.page-link {
+  color: var(--text-color) !important; /* Ensures it is always visible */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.page-link:hover,
+.page-link:focus {
+  color: var(--post-link-hover) !important;
+}
+.post-link {
+  color: var(--post-link) !important; /* Uses grey in light mode, light grey in dark mode */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.post-link:hover,
+.post-link:focus {
+  color: var(--post-link-hover) !important; /* Black in light mode, white in dark mode */
+}
+a {
+  color: var(--text-color); /* Ensures all links use the correct theme color */
+}
+
+a:hover {
+  color: var(--post-link-hover);
+}
