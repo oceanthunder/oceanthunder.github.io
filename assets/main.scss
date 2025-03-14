@@ -3,16 +3,67 @@
 
 @import "minima";
 
-/**
- * Page content
- */
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --box-bg: #ffffff;
+  --box-border: #e8e8e8;
+  --box-shadow: rgba(0, 0, 0, 0.1);
+  --hover-bg: #f0f0f0;
+  --footer-bg: #f9f9f9;
+  --footer-text: #555;
+  --post-link: grey;
+  --post-link-hover: black;
+  --post-meta: #828282;
+  --button-bg: black;
+  --button-text: white;
+}
+
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --box-bg: #1e1e1e;
+  --box-border: #333;
+  --box-shadow: rgba(255, 255, 255, 0.1);
+  --hover-bg: #292929;
+  --footer-bg: #1a1a1a;
+  --footer-text: #bbb;
+  --post-link: #c0c0c0;
+  --post-link-hover: #ffffff;
+  --post-meta: #aaaaaa;
+  --button-bg: white;
+  --button-text: black;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Button */
+button {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 5px;
+  transition: background 0.3s, color 0.3s;
+}
+
+button:hover {
+  background: var(--button-text);
+  color: var(--button-bg);
+}
+
+/* Page content */
 .page-content {
   padding: 30px;
   flex: 1;
-  background-color: #ffffff;
-  border: 1px solid #e8e8e8;
+  background-color: var(--box-bg);
+  border: 1px solid var(--box-border);
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px var(--box-shadow);
   margin: 20px; 
 }
 
@@ -34,42 +85,41 @@
 .post-list > li {
   margin-bottom: 20px; 
   padding: 15px;
-  background-color: #f9f9f9;
+  background-color: var(--box-bg);
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
 .post-list > li:hover {
-  background-color: #f0f0f0;
+  background-color: var(--hover-bg);
 }
 
+/* Post meta */
 .post-meta {
   font-size: 14px;
-  color: #828282;
+  color: var(--post-meta);
 }
 
+/* Post links */
 .post-link {
   display: block;
   font-size: 24px;
-  color: grey !important;
+  color: var(--post-link) !important;
   text-decoration: none !important;
 }
 
 .post-link:hover,
 .post-link:focus {
-  color: black !important;
+  color: var(--post-link-hover) !important;
 }
 
-
-/**
- * Footer 
- */
+/* Footer */
 .site-footer {
-  border-top: 1px solid #e8e8e8;
+  border-top: 1px solid var(--box-border);
   padding: 15px 0; 
   font-size: 14px; 
-  color: #555;
-  background-color: #f9f9f9;
+  color: var(--footer-text);
+  background-color: var(--footer-bg);
   text-align: center;
 }
 
@@ -77,7 +127,7 @@
   font-size: 16px; 
   font-weight: 600; 
   margin-bottom: 8px; 
-  color: #333; 
+  color: var(--text-color); 
 }
 
 .contact-list,
@@ -106,16 +156,17 @@
 }
 
 .site-footer a {
-  color: #555; 
+  color: var(--footer-text); 
   text-decoration: none;
   transition: color 0.2s ease; 
 }
 
 .site-footer a:hover,
 .site-footer a:focus {
-  color: #000;
+  color: var(--text-color);
 }
 
+/* Mobile responsive */
 @media screen and (max-width: 800px) {
   .footer-col-wrapper {
     flex-direction: column;
@@ -144,21 +195,68 @@
   }
 }
 
-/**
- *links on the posts in a box
- */
+/* Post content links */
 .post-content a {
   display: inline-block;
   padding: 1px 1px; 
   border-radius: 4px;
-  background-color: #333;
-  color: #eee; 
+  background-color: var(--post-link-hover);
+  color: var(--post-link);
   text-decoration: none; 
   transition: background-color 0.2s ease, color 0.2s ease;
-
-  &:hover {
-    background-color: #eee;
-    color: #333; 
-  }
 }
 
+.post-content a:hover {
+  background-color: var(--post-link);
+  color: var(--post-link-hover); 
+}
+.page-link {
+  color: var(--post-link) !important; /* Ensures it applies in both modes */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.page-link:hover,
+.page-link:focus {
+  color: var(--post-link-hover) !important;
+}
+
+.site-title {
+  font-size: 28px; /* Adjust size if needed */
+  font-weight: bold;
+  color: var(--text-color); /* Adapts to dark mode */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-title:hover,
+.site-title:focus {
+  color: var(--post-link-hover); /* Light mode: black, Dark mode: white */
+}
+.page-link {
+  color: var(--text-color) !important; /* Ensures it is always visible */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.page-link:hover,
+.page-link:focus {
+  color: var(--post-link-hover) !important;
+}
+.post-link {
+  color: var(--post-link) !important; /* Uses grey in light mode, light grey in dark mode */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.post-link:hover,
+.post-link:focus {
+  color: var(--post-link-hover) !important; /* Black in light mode, white in dark mode */
+}
+a {
+  color: var(--text-color); /* Ensures all links use the correct theme color */
+}
+
+a:hover {
+  color: var(--post-link-hover);
+}
