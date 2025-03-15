@@ -63,7 +63,7 @@ Improving hygiene practices—specifically in the context of food safety, not Re
 ![CSCC](/assets/blog2/sec42.png)
 
 
-### 3.5 Food Contents and Preparation Context
+### Section 5: Preparation Context
 
 Food preparation isn’t just about making things taste good—it’s about not poisoning your guests. Proper handling, hygiene, and avoiding cross-contamination are key. For example, fancy tech like Polymerase Chain Reaction (PCR) can detect contaminants, but let’s be real: washing your hands is cheaper. Dietary choices—veggie vs. meat, organic vs. conventional—also play a role in food safety risks.
 
@@ -82,7 +82,7 @@ Food preparation isn’t just about making things taste good—it’s about not 
 - **Home Cooking**: Lower risk if you’re not a slob.
 - **Street Food/Commercial**: Higher risk, because who knows what’s happening behind [that food cart](https://youtu.be/dhBxrfETXJA?feature=shared)?
 
-### 3.6 Climate
+### Section 6: Climate
 
 Just going to leave this here...
 
