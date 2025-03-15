@@ -365,3 +365,64 @@ a:hover {
     border-bottom: 1px solid var(--box-border) !important;
 }
 
+.page-content table {
+  max-width: 100%; 
+  overflow-x: auto;
+  display: block; 
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--box-bg);
+  border: 1px solid var(--box-border);
+  color: var(--text-color);
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid var(--box-border);
+  text-align: left;
+}
+
+th {
+  background-color: var(--hover-bg);
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: var(--footer-bg);
+}
+
+.dark-mode table {
+  border-color: var(--box-border);
+  background-color: var(--box-bg);
+  color: var(--text-color);
+}
+
+.dark-mode th, .dark-mode td {
+  border-color: var(--box-border);
+  color: var(--text-color);
+}
+
+.dark-mode th {
+  background-color: var(--hover-bg);
+}
+
+.dark-mode tr:nth-child(even) {
+  background-color: var(--footer-bg);
+}
+
+@media screen and (max-width: 600px) {
+  .page-content table {
+    font-size: 14px; 
+  }
+
+  th, td {
+    padding: 8px; 
+  }
+
+  th {
+    font-size: 15px;
+  }
+}
