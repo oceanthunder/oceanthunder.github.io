@@ -13,12 +13,7 @@
   src: url('/assets/fonts/minecraft.ttf') format('truetype');
 }
 
-html {
-cursor: url('/assets/cursor.png'), auto;
-}
-
 a, button {
-  cursor: url('/assets/pointer.png'), pointer;
   color: hotpink;
   text-decoration: none;
 }
@@ -165,8 +160,6 @@ nav, main {
 #guest {
     grid-row: 1;
     grid-column: span 20;
-    display: flex;
-    justify-content: center;
     height: 1000px;
 }
 
