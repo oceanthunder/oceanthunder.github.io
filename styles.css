@@ -162,6 +162,19 @@ nav, main {
     height: max-content;
 }
 
+#guest {
+    grid-row: 1;
+    grid-column: span 20;
+    display: flex;
+    justify-content: center;
+    height: 1000px;
+}
+
+#guest iframe {
+    width: 100%;
+    height: 100%;
+}
+
 #snail {
    border: white 2px solid; 
 }
