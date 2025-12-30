@@ -39,15 +39,8 @@ body {
 	font-family: 'emoji';
 }
 
-html {
+html, body {
   height: 100%; 
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
 }
 
 header {
@@ -136,7 +129,7 @@ h1 {
 }
 
 nav, main {
-    border: white 2px solid;
+    border: white 3px solid;
     background-color: black;
     padding: 10px;
 }
