@@ -62,11 +62,11 @@ h1 {
 #ocean, #thunder {
   font-size: 4rem;
   white-space: nowrap;
-
 }
 
-#ocean {
+#ocean, #ocean:hover {
   color: #ffffff;
+  text-decoration: none;
 }
 
 #thunder {
