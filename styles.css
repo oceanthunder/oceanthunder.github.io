@@ -175,6 +175,12 @@ nav, main {
     height: 100%;
 }
 
+#about {
+    grid-row: 1;
+    grid-column: span 20;
+    height: max-content;
+}
+
 #snail {
    border: white 2px solid; 
 }
