@@ -22,7 +22,7 @@ jobs:
         api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
         cleanup: true
         preview_before_deploy: false
-        dist_dir: '.'
+        dist_dir: 'public'
 
     - name: Deploy to Nekoweb
       uses: indiefellas/deploy2nekoweb@main
@@ -30,4 +30,4 @@ jobs:
         nekoweb-api-key: ${{ secrets.NEKOWEB_API_KEY }}
         nekoweb-domain: 'oceanthunder.nekoweb.org'
         nekoweb-username: 'oceanthunder'
-        directory: '.'
+        directory: 'public'
