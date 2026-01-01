@@ -1,4 +1,4 @@
-name: Deploy to Neocities
+name: Deploy to Neocities and Nekoweb
 
 on:
   push:
@@ -9,6 +9,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
       - uses: actions/checkout@v4
 
       - name: Deploy to neocities
@@ -19,3 +20,11 @@ jobs:
           neocities_supporter: false
           preview_before_deploy: true
           dist_dir: .
+
+      - name: Deploy to Nekoweb
+        uses: indiefellas/deploy2nekoweb@main
+        with:
+          nekoweb-api-key: ${{ secrets.NEKOWEB_API_KEY }}
+          nekoweb-domain: 'oceanthunder.nekoweb.org'
+          nekoweb-username: 'oceanthunder'
+          directory: '.'
