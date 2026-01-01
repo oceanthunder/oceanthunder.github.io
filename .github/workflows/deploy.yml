@@ -3,7 +3,7 @@ name: Deploy to Neocities and Nekoweb
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   deploy:
@@ -12,13 +12,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Deploy to neocities
+      - name: Deploy to Neocities
         uses: bcomnes/deploy-to-neocities@v3
         with:
           api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
           cleanup: true
           neocities_supporter: false
-          preview_before_deploy: true
+          preview_before_deploy: false
           dist_dir: .
 
       - name: Deploy to Nekoweb
