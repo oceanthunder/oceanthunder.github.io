@@ -19,10 +19,10 @@ jobs:
     - name: Deploy to Neocities
       uses: bcomnes/deploy-to-neocities@v3
       with:
-      api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
-      cleanup: true
-      preview_before_deploy: false
-      dist_dir: '.'
+        api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
+        cleanup: true
+        preview_before_deploy: false
+        dist_dir: '.'
 
     - name: Deploy to Nekoweb
       uses: indiefellas/deploy2nekoweb@main
