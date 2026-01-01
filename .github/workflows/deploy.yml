@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: deploy-sites
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,7 +21,6 @@ jobs:
         with:
           api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
           cleanup: true
-          neocities_supporter: false
           preview_before_deploy: false
           dist_dir: .
 
