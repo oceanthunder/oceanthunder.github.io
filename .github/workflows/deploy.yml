@@ -39,3 +39,4 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: public
+        commit-message: Montezuma's github action that has a lot of rocket emojis
