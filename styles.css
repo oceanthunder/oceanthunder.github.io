@@ -188,6 +188,8 @@ nav, main {
 
 #snail {
    border: white 2px solid; 
+   background-image: url('assets/cloud.gif');
+   background-repeat: no-repeat;
 }
 
 ul {

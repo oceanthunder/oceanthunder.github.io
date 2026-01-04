@@ -6,14 +6,14 @@ const images = [
 	"blockbuster.gif",
 	"internet.gif",
 	"tamagotchi.gif",
-	"ring.gif",
 	"hamster.gif",
 	"wizard.gif",
 	"windows.gif",
 	"gameboy.gif",
 	"nintendo64.gif",
 	"mariotennis.gif",
-	"sonic.gif"
+	"sonic.gif",
+	"walkman.gif"
 ];
 
 function changeGif() {
