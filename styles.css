@@ -186,6 +186,24 @@ nav, main {
     height: max-content;
 }
 
+.project {
+    grid-column: span 20;
+    display: grid;
+    grid-template-columns: auto 1fr; 
+    gap: 15px;
+}
+
+.project h2 {
+    grid-column: 1 / span 2; 
+    text-align: center;
+    margin: 0;
+}
+
+.project img {
+    display: block;
+    height: auto;
+}
+
 #snail {
    border: white 2px solid; 
    background-image: url('assets/cloud.gif');
