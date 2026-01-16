@@ -14,7 +14,7 @@
 }
 
 a, button {
-  color: hotpink;
+  color: yellow;
   text-decoration: none;
 }
 
@@ -55,6 +55,10 @@ header {
 
 h1 {
 	margin: 0;
+}
+
+h2, h3 {
+    color: #ADD8E6;
 }
 
 #ocean, #thunder {
@@ -202,6 +206,11 @@ nav, main {
 .project img {
     display: block;
     height: auto;
+    border: white 2px solid;
+}
+
+.project img:hover {
+    border: white 4px solid;
 }
 
 #snail {
