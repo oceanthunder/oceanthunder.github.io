@@ -14,12 +14,14 @@
 }
 
 a, button {
-  color: yellow;
+  color: #FDFD96;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+  text-decoration-color: #ADD8E6;
+  text-decoration-style: wavy;
 }
 
 body {
@@ -155,17 +157,10 @@ nav, main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #100e25;
-    border: #100e25 3px solid;
+    background-color: black;
+    border: white 3px solid;
 }
 
-#gifs img {
-    max-height: 198px;
-    max-width: 150px;
-    width: 100%; 
-    height: auto;
-    display: block;
-}
 
 #stats {
     grid-row: 2;
