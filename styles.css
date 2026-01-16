@@ -159,6 +159,8 @@ nav, main {
     align-items: center;
     background-color: black;
     border: white 3px solid;
+    height: 300px;
+    width: 200px;
 }
 
 
