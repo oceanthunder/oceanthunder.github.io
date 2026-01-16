@@ -1,19 +1,23 @@
-const path = "assets/gifs/";
+const path = "assets/posters/";
 const images = [
-        "browser.gif",
-	"dolphins.gif",
-	"xbox.gif",
-	"blockbuster.gif",
-	"internet.gif",
-	"tamagotchi.gif",
-	"hamster.gif",
-	"wizard.gif",
-	"windows.gif",
-	"gameboy.gif",
-	"nintendo64.gif",
-	"mariotennis.gif",
-	"sonic.gif",
-	"walkman.gif"
+	"bojack.jpg",
+	"arcane.jpg",
+	"2001.jpg",
+	"berserk.jpg",
+	"cyberpunk.jpg",
+	"elden.jpg",
+	"jojo.jpg",
+	"minecraft.jpg",
+	"undertale.jpg",
+	"gravity.jpg",
+	"onepiece.jpg",
+	"erased.jpg",
+	"hazbin.jpg",
+	"kaguya.jpg",
+	"mob.jpg",
+	"rickmorty.jpg",
+	"whiplash.jpg",
+	"bebop.jpg"
 ];
 
 function changeGif() {
@@ -28,6 +32,6 @@ function changeGif() {
 
 document.addEventListener('DOMContentLoaded', () => {
 	changeGif();
-	setInterval(changeGif, 6969);
+	setInterval(changeGif, 5000);
 });
 
