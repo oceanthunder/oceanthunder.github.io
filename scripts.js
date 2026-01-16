@@ -30,3 +30,4 @@ document.addEventListener('DOMContentLoaded', () => {
 	changeGif();
 	setInterval(changeGif, 6969);
 });
+
