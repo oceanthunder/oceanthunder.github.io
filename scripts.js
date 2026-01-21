@@ -32,6 +32,6 @@ function changeGif() {
 
 document.addEventListener('DOMContentLoaded', () => {
 	changeGif();
-	setInterval(changeGif, 5000);
+	setInterval(changeGif, 6969);
 });
 
