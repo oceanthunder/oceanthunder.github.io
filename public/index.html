@@ -4,6 +4,8 @@
 <title>Ocean Thunder</title>
 <link rel="stylesheet" href="styles.css">
 <script src="scripts.js"></script>
+
+
 </head>
 <body>		
 <header><h1><a href="index.html"<span id="ocean">Ocean</span><span id="thunder">Thunder</span></h1></a></header>
@@ -42,26 +44,21 @@
 		<nav id="links"><h3><span id="emoji">F</span> Clickity<span id="emoji">z</span></h3>
 			<ul>
 				<li><a href="about.html">Yapping Point</a></li>
-				<li><a href="blog.html">Blog (more yap)</a></li>
 				<li><a href="projects.html">Projects</a></li>
 				<li><a href="guestbook.html">Guestbook</a></li>
 				<li><a href="https://www.github.com/oceanthunder">GitHub<a></li>
+				<li><a href="https://steamcommunity.com/id/oceanthunder/">Steam<a></li>
 				<li><a href="mailto:admin@oceanthunder.dev">Email</a></li>
 			</ul>
 		</nav>
 
 		<nav id="gifs">
 		</nav>
-			<main id="stats">
-				<h3><span id="emoji">c</span> Stats<span id="emoji">z</span></h3>
-			This site is currently under construction in the hands of a distracted mind.
-			Things can and will break!
-			<br>
-			<img src="assets/construction.gif">
-			<br>
-			<br>
-			<span>Updated: 19/1/2026</span><br>
+		<main id="stats">
+			<h3><span id="emoji">c</span> Stats<span id="emoji">z</span></h3>
+			<span>Updated: 21/1/2026</span><br>
 			<span>Created: 27/12/2025</span>
+			<div id="visitor-counter"></div>
 		</main>
 	</div> 
 
@@ -69,5 +66,21 @@
 
 
 <footer>&#169; 2025 oceanthunder. This site is&nbsp;<a href="https://github.com/oceanthunder/oceanthunder.github.io"> open source</a>!</footer>
+
+<script>
+    var t = setInterval(function() {
+        if (window.goatcounter && window.goatcounter.visit_count) {
+            clearInterval(t)
+            window.goatcounter.visit_count({
+                append: '#visitor-counter',
+                type: 'html',             
+                no_branding: true        
+            })
+        }
+    }, 100)
+</script>
+
+<script data-goatcounter="https://oceanthunder.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
