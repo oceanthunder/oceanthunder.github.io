@@ -56,9 +56,9 @@
 		</nav>
 		<main id="stats">
 			<h3><span id="emoji">c</span> Stats<span id="emoji">z</span></h3>
-			<span>Updated: 21/1/2026</span><br>
-			<span>Created: 27/12/2025</span>
-			<div id="visitor-counter"></div>
+			<p>Updated: 21/1/2026</p>
+			<p>Created: 27/12/2025</p>
+			<p>Visits: <span id="v-count">...</span></p>
 		</main>
 	</div> 
 
@@ -68,19 +68,17 @@
 <footer>&#169; 2025 oceanthunder. This site is&nbsp;<a href="https://github.com/oceanthunder/oceanthunder.github.io"> open source</a>!</footer>
 
 <script>
-    var t = setInterval(function() {
-        if (window.goatcounter && window.goatcounter.visit_count) {
-            clearInterval(t)
-            window.goatcounter.visit_count({
-                append: '#visitor-counter',
-                type: 'html',             
-                no_branding: true        
-            })
-        }
-    }, 100)
+        (function() {
+            fetch('https://oceanthunder.goatcounter.com/counter/TOTAL.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('v-count').innerText = data.count;
+                })
+        })();
 </script>
 
 <script data-goatcounter="https://oceanthunder.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+        async src="https://gc.zgo.at/count.js"></script>
+
 </body>
 </html>
