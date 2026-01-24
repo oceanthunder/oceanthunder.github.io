@@ -215,7 +215,8 @@ nav, main {
 }
 
 #snail {
-   border: white 2px solid; 
+   border: #797c1d 2px solid; 
+   border-radius: 14px;
    background-image: url('assets/cloud.gif');
    background-repeat: no-repeat;
 }
