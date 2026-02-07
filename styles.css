@@ -213,6 +213,27 @@ nav, main {
     transform: scale(1.01);
 }
 
+.ekphrasis {
+    grid-column: span 20;
+    display: grid;
+    grid-template-columns: auto 1fr; 
+    gap: 10px;
+}
+
+.ekphrasis h2 {
+    grid-column: 1 / span 2; 
+    text-align: center;
+    margin: 0;
+}
+
+.ekphrasis img {
+    display: block;
+    height: 512px;
+    width: auto;
+    border: #797c1d 2px solid;
+    border-radius: 14px;
+}
+
 #snail {
   border: #797c1d 2px solid;
   border-radius: 14px;
