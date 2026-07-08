@@ -1,4 +1,4 @@
-name: Deploy to Neocities and Nekoweb
+name: Deploy to GitHub gh-pages branch
 
 on:
   push:
@@ -18,22 +18,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Deploy to Neocities
-      uses: bcomnes/deploy-to-neocities@v3
-      with:
-        api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
-        cleanup: true
-        preview_before_deploy: false
-        dist_dir: 'public'
-
-    - name: Deploy to Nekoweb
-      uses: indiefellas/deploy2nekoweb@main
-      with:
-        nekoweb-api-key: ${{ secrets.NEKOWEB_API_KEY }}
-        nekoweb-domain: 'oceanthunder.nekoweb.org'
-        nekoweb-username: 'oceanthunder'
-        directory: 'public'
 
     - name: Deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@v4
