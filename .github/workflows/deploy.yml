@@ -18,6 +18,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Generate site stats
+      run: |
+        updated=$(git log -1 --format=%cd --date=format:'%d/%m/%Y')
+        commits=$(git rev-list --count HEAD)
+        printf '{"updated":"%s","commits":%s}\n' "$updated" "$commits" > public/stats.json
 
     - name: Deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@v4
