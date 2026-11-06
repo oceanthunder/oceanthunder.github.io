@@ -1,12 +1,14 @@
 (() => {
 	"use strict";
 
-	const USER = "oceanthunder";
-	const USER_PATH = encodeURIComponent(USER);
-	const PROFILE = `https://listenbrainz.org/user/${USER_PATH}/`;
-	const API = `https://api.listenbrainz.org/1/user/${USER_PATH}`;
+	const USER = "ocean_thunder";
+	const PROFILE = `https://www.last.fm/user/${encodeURIComponent(USER)}/`;
+	const API = "https://ws.audioscrobbler.com/2.0/";
+	// Public, read-only API key. The Last.fm shared secret is never used here.
+	const API_KEY = "0046f14e0bf5744a5557b78a95185e5e";
 	const POLL_INTERVAL = 30000;
 	const REQUEST_TIMEOUT = 10000;
+	const PLACEHOLDER_ART = "2a96cbd8b46e442fc41c2b86b821562f";
 
 	const root = document.getElementById("now-playing");
 	if (!root) {
@@ -21,7 +23,7 @@
 		when: document.getElementById("np-when")
 	};
 
-	const artCache = new Map();
+	const artLink = root.querySelector(".np-art");
 	let timerId = null;
 	let artRequest = 0;
 	let currentKey = "";
@@ -53,8 +55,23 @@
 		}
 	}
 
+	function apiUrl(method, params) {
+		const url = new URL(API);
+		url.searchParams.set("method", method);
+		url.searchParams.set("api_key", API_KEY);
+		url.searchParams.set("format", "json");
+
+		Object.keys(params).forEach((key) => {
+			url.searchParams.set(key, params[key]);
+		});
+
+		// Avoid any intermediary cache returning an old "now playing" result.
+		url.searchParams.set("_", String(Date.now()));
+		return url.toString();
+	}
+
 	function timeAgo(unixSeconds) {
-		if (!unixSeconds) {
+		if (!unixSeconds || !Number.isFinite(unixSeconds)) {
 			return "";
 		}
 
@@ -85,50 +102,45 @@
 		});
 	}
 
-	function simplifyTrack(name) {
-		return name
-			.replace(/\s*[([][^)\]]*[)\]]/g, "")
-			.replace(/\s+-\s+.*$/, "")
-			.trim();
-	}
-
-	function searchTerm(parts) {
-		return parts.filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
-	}
-
-	async function findArtwork(artist, track, release) {
-		const key = [artist, track, release].join("|").toLowerCase();
-		if (artCache.has(key)) {
-			return artCache.get(key);
+	function text(value) {
+		if (value && typeof value === "object") {
+			return value["#text"] || value.name || "";
 		}
 
-		const simplified = simplifyTrack(track);
-		const queries = [
-			searchTerm([artist, track, release]),
-			searchTerm([artist, track]),
-			simplified !== track ? searchTerm([artist, simplified]) : "",
-			searchTerm([artist, release])
-		].filter((query, index, all) => query && all.indexOf(query) === index);
+		return value || "";
+	}
 
-		for (const term of queries) {
-			try {
-				const data = await getJSON(
-					`https://itunes.apple.com/search?term=${encodeURIComponent(term)}&media=music&entity=song&limit=5`
-				);
-				const results = Array.isArray(data.results) ? data.results : [];
-				const hit = results.find((item) => item && item.artworkUrl100);
+	function firstTrack(payload) {
+		const tracks = payload && payload.recenttracks && payload.recenttracks.track;
+		if (!tracks) {
+			return null;
+		}
 
-				if (hit) {
-					const url = hit.artworkUrl100.replace(/\/\d+x\d+bb\./, "/300x300bb.");
-					artCache.set(key, url);
-					return url;
-				}
-			} catch (error) {
-				// Try the next, less specific search.
+		return Array.isArray(tracks) ? tracks[0] || null : tracks;
+	}
+
+	function isNowPlaying(track) {
+		return Boolean(
+			track &&
+				track["@attr"] &&
+				track["@attr"].nowplaying === "true"
+		);
+	}
+
+	function pickArtwork(track) {
+		const images = Array.isArray(track && track.image) ? track.image : [];
+		const sizes = ["mega", "extralarge", "large", "medium", "small"];
+
+		for (const size of sizes) {
+			const image = images.find(
+				(item) => item && item.size === size && item["#text"]
+			);
+
+			if (image && !image["#text"].includes(PLACEHOLDER_ART)) {
+				return image["#text"];
 			}
 		}
 
-		artCache.set(key, "");
 		return "";
 	}
 
@@ -158,16 +170,33 @@
 		loader.src = url;
 	}
 
-	function renderListen(listen, isPlaying) {
-		const metadata = listen.track_metadata || {};
-		const artist = metadata.artist_name || "Unknown artist";
-		const track = metadata.track_name || "Unknown track";
-		const release = metadata.release_name || "";
-		const key = [isPlaying, artist, track, release, isPlaying ? "" : listen.listened_at].join("|");
+	function setLinks(track) {
+		const url = track && track.url ? track.url : PROFILE;
+		el.track.href = url;
+
+		if (artLink) {
+			artLink.href = url;
+		}
+	}
+
+	function renderTrack(track, isPlaying) {
+		const artist = text(track.artist) || "Unknown artist";
+		const name = text(track.name) || "Unknown track";
+		const album = text(track.album) || "";
+		const timestamp =
+			track.date && track.date.uts ? Number(track.date.uts) : null;
+		const key = [
+			isPlaying,
+			artist,
+			name,
+			album,
+			isPlaying ? "" : timestamp
+		].join("|");
 
 		hasContent = true;
 		root.classList.toggle("is-playing", isPlaying);
-		setText(el.when, isPlaying ? "live" : timeAgo(listen.listened_at));
+		setText(el.when, isPlaying ? "live" : timeAgo(timestamp));
+		setLinks(track);
 
 		if (key === currentKey) {
 			return;
@@ -175,26 +204,23 @@
 
 		currentKey = key;
 		setText(el.status, isPlaying ? "Now playing" : "Last played");
-		setText(el.track, track);
-		setText(el.artist, release ? `${artist} \u2014 ${release}` : artist);
+		setText(el.track, name);
+		setText(el.artist, album ? `${artist} \u2014 ${album}` : artist);
 
-		el.track.title = track;
-		el.artist.title = release ? `${artist} \u2014 ${release}` : artist;
+		el.track.title = name;
+		el.artist.title = album ? `${artist} \u2014 ${album}` : artist;
 
 		const token = ++artRequest;
-		const alt = `${release || track} album art`;
+		const artwork = pickArtwork(track);
 
-		findArtwork(artist, track, release).then((url) => {
-			if (token !== artRequest) {
-				return;
-			}
+		// Hide the previous cover while the new one loads.
+		el.art.hidden = true;
 
-			if (url) {
-				loadArtwork(url, alt, token);
-			} else {
-				el.art.hidden = true;
-			}
-		});
+		if (artwork) {
+			loadArtwork(artwork, `${album || name} album art`, token);
+		} else {
+			el.art.hidden = true;
+		}
 	}
 
 	function renderEmpty() {
@@ -203,10 +229,11 @@
 		artRequest += 1;
 		root.classList.remove("is-playing");
 		el.art.hidden = true;
+		setLinks(null);
 
 		setText(el.status, "Off air");
 		setText(el.track, "Nothing playing right now");
-		setText(el.artist, "Check my profile on ListenBrainz");
+		setText(el.artist, "Check my profile on Last.fm");
 		setText(el.when, "");
 
 		el.track.title = "";
@@ -224,25 +251,23 @@
 		setText(el.artist, "Check my profile instead");
 	}
 
-	function firstListen(payload) {
-		return payload && payload.listens && payload.listens[0] ? payload.listens[0] : null;
-	}
-
 	async function refresh() {
 		try {
-			const now = await getJSON(`${API}/playing-now`);
-			const nowPlaying = firstListen(now.payload);
+			const payload = await getJSON(
+				apiUrl("user.getrecenttracks", {
+					user: USER,
+					limit: "1"
+				})
+			);
 
-			if (nowPlaying) {
-				renderListen(nowPlaying, true);
-				return;
+			if (payload && payload.error) {
+				throw new Error(payload.message || `Last.fm error ${payload.error}`);
 			}
 
-			const recent = await getJSON(`${API}/listens?count=1`);
-			const lastPlayed = firstListen(recent.payload);
+			const track = firstTrack(payload);
 
-			if (lastPlayed) {
-				renderListen(lastPlayed, false);
+			if (track) {
+				renderTrack(track, isNowPlaying(track));
 			} else {
 				renderEmpty();
 			}
@@ -269,9 +294,11 @@
 		}
 	});
 
-	// Keep the profile link in sync if the username is ever changed above.
+	// Keep the profile links in sync if the username is ever changed above.
 	document.querySelectorAll("#now-playing a").forEach((link) => {
-		link.href = PROFILE;
+		if (!link.classList.contains("np-track") && !link.classList.contains("np-art")) {
+			link.href = PROFILE;
+		}
 	});
 
 	tick();
