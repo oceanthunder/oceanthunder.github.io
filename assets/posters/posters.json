@@ -1,0 +1,50 @@
+[
+  {
+    "src": "assets/posters/opt/arcane.webp",
+    "title": "Arcane"
+  },
+  {
+    "src": "assets/posters/opt/berserk.webp",
+    "title": "Berserk"
+  },
+  {
+    "src": "assets/posters/opt/bojack.webp",
+    "title": "Bojack"
+  },
+  {
+    "src": "assets/posters/opt/cyberpunk.webp",
+    "title": "Cyberpunk"
+  },
+  {
+    "src": "assets/posters/opt/erased.webp",
+    "title": "Erased"
+  },
+  {
+    "src": "assets/posters/opt/jojo.webp",
+    "title": "Jojo"
+  },
+  {
+    "src": "assets/posters/opt/kaguya.webp",
+    "title": "Kaguya"
+  },
+  {
+    "src": "assets/posters/opt/minecraft.webp",
+    "title": "Minecraft"
+  },
+  {
+    "src": "assets/posters/opt/mob.webp",
+    "title": "Mob"
+  },
+  {
+    "src": "assets/posters/opt/onepiece.webp",
+    "title": "Onepiece"
+  },
+  {
+    "src": "assets/posters/opt/rickmorty.webp",
+    "title": "Rickmorty"
+  },
+  {
+    "src": "assets/posters/opt/whiplash.webp",
+    "title": "Whiplash"
+  }
+]
