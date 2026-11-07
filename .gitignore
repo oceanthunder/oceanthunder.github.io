@@ -1,0 +1,6 @@
+# Generated at deploy time by .github/workflows/deploy.yml
+public/assets/posters/opt/
+public/assets/posters/posters.json
+
+# Generated locally by tools/build-posters.py
+public/stats.json

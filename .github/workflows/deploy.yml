@@ -21,6 +21,66 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Build poster manifest and optimized images
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y imagemagick webp
+        python3 - <<'PY'
+        import json
+        import os
+        import shutil
+        import subprocess
+        from urllib.parse import quote
+
+        source_dir = "public/assets/posters"
+        optimized_dir = os.path.join(source_dir, "opt")
+        image_extensions = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+        os.makedirs(optimized_dir, exist_ok=True)
+
+        posters = []
+        for filename in sorted(os.listdir(source_dir)):
+            stem, extension = os.path.splitext(filename)
+            if extension.lower() not in image_extensions:
+                continue
+
+            source = os.path.join(source_dir, filename)
+            optimized_name = f"{stem}.webp"
+            optimized_path = os.path.join(optimized_dir, optimized_name)
+            public_path = f"assets/posters/opt/{quote(optimized_name)}"
+
+            try:
+                subprocess.run(
+                    [
+                        "convert",
+                        source,
+                        "-auto-orient",
+                        "-strip",
+                        "-resize",
+                        "600x900>",
+                        "-quality",
+                        "82",
+                        optimized_path,
+                    ],
+                    check=True,
+                )
+            except Exception as exc:
+                print(f"Could not optimize {filename}, serving the original instead: {exc}")
+                shutil.copy2(source, os.path.join(optimized_dir, filename))
+                public_path = f"assets/posters/opt/{quote(filename)}"
+
+            posters.append({
+                "src": public_path,
+                "title": stem.replace("-", " ").replace("_", " ").title(),
+            })
+
+        manifest_path = os.path.join(source_dir, "posters.json")
+        with open(manifest_path, "w", encoding="utf-8") as manifest:
+            json.dump(posters, manifest, indent=2)
+            manifest.write("\n")
+
+        print(f"Generated a poster manifest with {len(posters)} entries")
+        PY
+
     - name: Generate site stats
       run: |
         updated=$(git log -1 --format=%cd --date=format:'%d/%m/%Y')
