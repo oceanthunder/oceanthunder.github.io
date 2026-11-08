@@ -12,8 +12,16 @@
     "title": "Bojack"
   },
   {
-    "src": "assets/posters/opt/cyberpunk.webp",
-    "title": "Cyberpunk"
+    "src": "assets/posters/opt/cp2077.webp",
+    "title": "Cp2077"
+  },
+  {
+    "src": "assets/posters/opt/doraemon.webp",
+    "title": "Doraemon"
+  },
+  {
+    "src": "assets/posters/opt/edgerunners.webp",
+    "title": "Edgerunners"
   },
   {
     "src": "assets/posters/opt/erased.webp",
@@ -40,8 +48,32 @@
     "title": "Onepiece"
   },
   {
+    "src": "assets/posters/opt/punpun.webp",
+    "title": "Punpun"
+  },
+  {
+    "src": "assets/posters/opt/rdr2.webp",
+    "title": "Rdr2"
+  },
+  {
     "src": "assets/posters/opt/rickmorty.webp",
     "title": "Rickmorty"
+  },
+  {
+    "src": "assets/posters/opt/shinchan.webp",
+    "title": "Shinchan"
+  },
+  {
+    "src": "assets/posters/opt/spiderverse.webp",
+    "title": "Spiderverse"
+  },
+  {
+    "src": "assets/posters/opt/tokyoghoul.webp",
+    "title": "Tokyoghoul"
+  },
+  {
+    "src": "assets/posters/opt/up.webp",
+    "title": "Up"
   },
   {
     "src": "assets/posters/opt/whiplash.webp",
