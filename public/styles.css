@@ -139,6 +139,36 @@ nav, main {
     padding: 10px;
 }
 
+#links, #stats {
+    position: relative;
+    padding-top: 32px;
+}
+
+.neon-tab {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 120px;
+    height: 40px;
+    margin: 0;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    line-height: 1;
+    background: url("assets/cloud-tab.svg") center / 100% 100% no-repeat;
+    font-size: 0.86rem;
+    z-index: 2;
+}
+
+
+.neon-label {
+    position: relative;
+    z-index: 1;
+    color: #ADD8E6;
+    white-space: nowrap;
+    transform: translateY(2px);
+}
+
 #welcome {
     grid-row: 1;
     grid-column: span 16; 
@@ -209,6 +239,7 @@ nav, main {
     border-radius: 7px;
     background-color: black;
     overflow: hidden;
+    margin: 7px;
 }
 
 .np-art {
@@ -382,12 +413,39 @@ nav, main {
     display: grid;
     grid-template-columns: auto 1fr; 
     gap: 10px;
+    position: relative;
+    padding-top: 34px;
 }
 
-.project h2 {
-    grid-column: 1 / span 2; 
-    text-align: center;
+.project h2,
+.ekphrasis h2 {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    height: 34px;
     margin: 0;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ADD8E6;
+    font-size: 1.3rem;
+    line-height: 1;
+    white-space: nowrap;
+    background: #2b4c80;
+}
+
+.project h2::before,
+.ekphrasis h2::before {
+    content: "";
+    position: absolute;
+    inset: 1.5px;
+    z-index: -1;
+    background: linear-gradient(180deg, #0c0b20, #080716);
 }
 
 .project img {
@@ -407,10 +465,8 @@ nav, main {
     flex-direction: column;
     align-items: center;  
     gap: 20px;          
-}
-
-.ekphrasis h2 {
-    margin: 0;
+    position: relative;
+    padding-top: 34px;
 }
 
 .ekphrasis img {
