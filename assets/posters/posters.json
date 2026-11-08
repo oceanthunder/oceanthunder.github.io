@@ -1,15 +1,31 @@
 [
   {
+    "src": "assets/posters/opt/2001spaceodyssey.webp",
+    "title": "2001Spaceodyssey"
+  },
+  {
     "src": "assets/posters/opt/arcane.webp",
     "title": "Arcane"
+  },
+  {
+    "src": "assets/posters/opt/attackontitan.webp",
+    "title": "Attackontitan"
   },
   {
     "src": "assets/posters/opt/berserk.webp",
     "title": "Berserk"
   },
   {
-    "src": "assets/posters/opt/bojack.webp",
-    "title": "Bojack"
+    "src": "assets/posters/opt/beyblade.webp",
+    "title": "Beyblade"
+  },
+  {
+    "src": "assets/posters/opt/bluelock.webp",
+    "title": "Bluelock"
+  },
+  {
+    "src": "assets/posters/opt/bojackhorseman.webp",
+    "title": "Bojackhorseman"
   },
   {
     "src": "assets/posters/opt/cp2077.webp",
@@ -28,28 +44,68 @@
     "title": "Erased"
   },
   {
+    "src": "assets/posters/opt/fightclub.webp",
+    "title": "Fightclub"
+  },
+  {
+    "src": "assets/posters/opt/frieren.webp",
+    "title": "Frieren"
+  },
+  {
+    "src": "assets/posters/opt/gameofthrones.webp",
+    "title": "Gameofthrones"
+  },
+  {
+    "src": "assets/posters/opt/gravityfalls.webp",
+    "title": "Gravityfalls"
+  },
+  {
     "src": "assets/posters/opt/jojo.webp",
     "title": "Jojo"
   },
   {
-    "src": "assets/posters/opt/kaguya.webp",
-    "title": "Kaguya"
+    "src": "assets/posters/opt/kaguyasama.webp",
+    "title": "Kaguyasama"
+  },
+  {
+    "src": "assets/posters/opt/madeinabyss.webp",
+    "title": "Madeinabyss"
   },
   {
     "src": "assets/posters/opt/minecraft.webp",
     "title": "Minecraft"
   },
   {
-    "src": "assets/posters/opt/mob.webp",
-    "title": "Mob"
+    "src": "assets/posters/opt/mobpsycho100.webp",
+    "title": "Mobpsycho100"
+  },
+  {
+    "src": "assets/posters/opt/mrbean.webp",
+    "title": "Mrbean"
+  },
+  {
+    "src": "assets/posters/opt/mrrobot.webp",
+    "title": "Mrrobot"
   },
   {
     "src": "assets/posters/opt/onepiece.webp",
     "title": "Onepiece"
   },
   {
-    "src": "assets/posters/opt/punpun.webp",
-    "title": "Punpun"
+    "src": "assets/posters/opt/oppenheimer.webp",
+    "title": "Oppenheimer"
+  },
+  {
+    "src": "assets/posters/opt/oyasumipunpun.webp",
+    "title": "Oyasumipunpun"
+  },
+  {
+    "src": "assets/posters/opt/pokemon.webp",
+    "title": "Pokemon"
+  },
+  {
+    "src": "assets/posters/opt/ratatouille.webp",
+    "title": "Ratatouille"
   },
   {
     "src": "assets/posters/opt/rdr2.webp",
@@ -64,8 +120,8 @@
     "title": "Shinchan"
   },
   {
-    "src": "assets/posters/opt/spiderverse.webp",
-    "title": "Spiderverse"
+    "src": "assets/posters/opt/tedlasso.webp",
+    "title": "Tedlasso"
   },
   {
     "src": "assets/posters/opt/tokyoghoul.webp",
