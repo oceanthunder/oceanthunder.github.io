@@ -223,8 +223,18 @@ nav, main {
 
 #stats {
     grid-row: 3;
-    grid-column: span 15;
+    grid-column: span 10;
     height: max-content;
+}
+
+#neolink {
+    grid-row: 3;
+    grid-column: span 5;
+    align-self: start;
+    display: flex;
+    overflow: hidden;
+    width: max-content;
+    padding: 6px;
 }
 
 #now-playing {
