@@ -169,7 +169,7 @@ function startPosterCycle() {
 }
 
 async function initPosterWidget() {
-	const container = document.getElementById("gifs");
+	const container = document.querySelector("#gifs .window-content");
 	if (!container) return;
 
 	posters = await loadPosters();

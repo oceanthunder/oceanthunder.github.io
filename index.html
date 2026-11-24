@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <title>Ocean Thunder</title>
-<link rel="stylesheet" href="styles.css?v=20261124-neolink-tight">
-<script src="scripts.js?v=20261107-posters"></script>
+<link rel="stylesheet" href="styles.css?v=20261124-icons2">
+<script src="scripts.js?v=20261124-windowbars"></script>
 <script src="now-playing.js?v=20261107-lastfm" defer></script>
 <script src="stats.js?v=20261107-2" defer></script>
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
@@ -20,6 +20,11 @@
 
 	<div class="box">
 		<main id="welcome">
+			<div class="window-title-bar">
+				<h3 class="window-title">About</h3>
+				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+			</div>
+			<div class="window-content">
 			<h2>Welcome to my website<span id="emoji">zx</span></h2>
 			<p>
 			It was made by pressing some buttons (I really love pressing buttons).
@@ -45,9 +50,15 @@
 			<br>
 			Well, feel free to explore my website! (and maybe drop a note in the guestbook, eh?)
 			</p>
+			</div>
 		</main>
 
-		<nav id="links"><h3 class="neon-tab"><span class="neon-label"><span id="emoji">F</span> Clickity<span id="emoji">z</span></span></h3>
+		<nav id="links">
+			<div class="window-title-bar">
+				<h3 class="window-title">Clickity</h3>
+				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+			</div>
+			<div class="window-content">
 			<ul>
 				<li><a href="projects.html">Projects</a></li>
 				<li><a href="ekphrasis.html">Ekphrasis</a></li>
@@ -55,15 +66,20 @@
 				<li><a href="https://www.github.com/oceanthunder">GitHub<a></li>
 				<li><a href="mailto:admin@oceanthunder.dev">Email</a></li>
 			</ul>
+			</div>
 		</nav>
 
 		<section id="now-playing" aria-label="What I'm listening to">
+			<div class="window-title-bar">
+				<h3 class="window-title" id="np-status" aria-live="polite">Tuning in&hellip;</h3>
+				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+			</div>
+			<div class="window-content">
 			<a class="np-art" href="https://www.last.fm/user/ocean_thunder/" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
 				<span class="np-art-fallback">&#9834;</span>
 				<img id="np-art-img" alt="" hidden>
 			</a>
 			<div class="np-details" aria-live="polite" aria-atomic="true">
-				<p class="np-status" id="np-status">Tuning in&hellip;</p>
 				<a class="np-track" id="np-track" href="https://www.last.fm/user/ocean_thunder/" target="_blank" rel="noopener noreferrer">Waiting for a track</a>
 				<p class="np-artist" id="np-artist">on Last.fm</p>
 			</div>
@@ -74,19 +90,36 @@
 				<span class="np-when" id="np-when"></span>
 				<a class="np-source" href="https://www.last.fm/user/ocean_thunder/" target="_blank" rel="noopener noreferrer">Last.fm</a>
 			</div>
+			</div>
 		</section>
 
-		<nav id="gifs" title="stuff i like">
+		<nav id="gifs">
+			<div class="window-title-bar">
+				<h3 class="window-title">Stuff I Like</h3>
+				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+			</div>
+			<div class="window-content"></div>
 		</nav>
 		<main id="stats">
-			<h3 class="neon-tab"><span class="neon-label"><span id="emoji">c</span> Stats<span id="emoji">z</span></span></h3>
+			<div class="window-title-bar">
+				<h3 class="window-title">Stats</h3>
+				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+			</div>
+			<div class="window-content">
 			<p>Updated: <span id="stat-updated"></span></p>
 			<p>Created: 27/12/2025</p>
 			<p>Number of commits: <span id="stat-commits"></span></p>
+			</div>
 		</main>
 
-		<nav id="neolink" title="navlink ads">
+		<nav id="neolink">
+			<div class="window-title-bar">
+				<h3 class="window-title">Navlink Ads</h3>
+				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+			</div>
+			<div class="window-content">
 			<iframe width="180" height="180" style="border:none" src="https://nvlk.dimden.dev/" name="neolink" title="check out these other cool sites!"></iframe>
+			</div>
 		</nav>
 	</div> 
 
