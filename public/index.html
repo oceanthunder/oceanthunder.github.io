@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <title>Ocean Thunder</title>
-<link rel="stylesheet" href="styles.css?v=20261124-guestbook-page">
+<link rel="stylesheet" href="styles.css?v=20261124-sisyphus-stage-margins">
+<link rel="stylesheet" href="assets/webmeji/webmeji.css?v=20261124-sisyphus-stage-margins">
 <script src="scripts.js?v=20261124-windowbars"></script>
 <script src="now-playing.js?v=20261107-lastfm" defer></script>
 <script src="stats.js?v=20261107-2" defer></script>
@@ -53,21 +54,33 @@
 			</div>
 		</main>
 
-		<nav id="links">
-			<div class="window-title-bar">
-				<h3 class="window-title">Clickity</h3>
-				<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
-			</div>
-			<div class="window-content">
-			<ul>
-				<li><a href="projects.html">Projects</a></li>
-				<li><a href="ekphrasis.html">Ekphrasis</a></li>
-				<li><a href="guestbook.html">Guestbook</a></li>
-				<li><a href="https://www.github.com/oceanthunder">GitHub<a></li>
-				<li><a href="mailto:admin@oceanthunder.dev">Email</a></li>
-			</ul>
-			</div>
-		</nav>
+		<div class="side-stack">
+			<nav id="links">
+				<div class="window-title-bar">
+					<h3 class="window-title">Clickity</h3>
+					<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+				</div>
+				<div class="window-content">
+				<ul>
+					<li><a href="projects.html">Projects</a></li>
+					<li><a href="ekphrasis.html">Ekphrasis</a></li>
+					<li><a href="guestbook.html">Guestbook</a></li>
+					<li><a href="https://www.github.com/oceanthunder">GitHub<a></li>
+					<li><a href="mailto:admin@oceanthunder.dev">Email</a></li>
+				</ul>
+				</div>
+			</nav>
+
+			<section id="sisyphus" aria-label="Happy Sisyphus">
+				<div class="window-title-bar">
+					<h3 class="window-title">Happy Sisyphus</h3>
+					<span class="window-icons" aria-hidden="true"><span class="window-icon icon-min"></span><span class="window-icon icon-max"></span><span class="window-icon icon-close"></span></span>
+				</div>
+				<div class="window-content">
+					<div id="webmeji-stage" aria-hidden="true"></div>
+				</div>
+			</section>
+		</div>
 
 		<section id="now-playing" aria-label="What I'm listening to">
 			<div class="window-title-bar">
@@ -127,5 +140,7 @@
 
 
 <footer>&#169; 2025 oceanthunder. This site is&nbsp;<a href="https://github.com/oceanthunder/oceanthunder.github.io"> open source</a>!</footer>
+<script src="assets/webmeji/config.js?v=20261124-sisyphus-stage-margins"></script>
+<script src="assets/webmeji/webmeji.js?v=20261124-sisyphus-stage-margins"></script>
 </body>
 </html>

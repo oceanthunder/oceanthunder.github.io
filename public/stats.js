@@ -130,8 +130,6 @@
 			}
 			return;
 		} catch (localError) {
-			// Local stats are generated at deploy time. Fall back to GitHub for
-			// local previews or if the file is missing.
 		}
 
 		try {

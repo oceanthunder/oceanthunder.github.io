@@ -4,7 +4,6 @@
 	const USER = "ocean_thunder";
 	const PROFILE = `https://www.last.fm/user/${encodeURIComponent(USER)}/`;
 	const API = "https://ws.audioscrobbler.com/2.0/";
-	// Public, read-only API key. The Last.fm shared secret is never used here.
 	const API_KEY = "0046f14e0bf5744a5557b78a95185e5e";
 	const POLL_INTERVAL = 30000;
 	const REQUEST_TIMEOUT = 10000;
@@ -65,7 +64,6 @@
 			url.searchParams.set(key, params[key]);
 		});
 
-		// Avoid any intermediary cache returning an old "now playing" result.
 		url.searchParams.set("_", String(Date.now()));
 		return url.toString();
 	}
@@ -213,7 +211,6 @@
 		const token = ++artRequest;
 		const artwork = pickArtwork(track);
 
-		// Hide the previous cover while the new one loads.
 		el.art.hidden = true;
 
 		if (artwork) {
@@ -294,7 +291,6 @@
 		}
 	});
 
-	// Keep the profile links in sync if the username is ever changed above.
 	document.querySelectorAll("#now-playing a").forEach((link) => {
 		if (!link.classList.contains("np-track") && !link.classList.contains("np-art")) {
 			link.href = PROFILE;
