@@ -12,3 +12,4 @@ Resources/Acknowledgements:
 11) https://scripted.neocities.org/ {a box full of resources!}
 12) https://craftpix.net/freebies/free-sky-with-clouds-background-pixel-art-set/ {for my header background}
 13) https://gifcities.org/ {for the gifs}
+14) https://cosmikoda.neocities.org/#/ {for the classic boxy min/max/close style}
