@@ -132,7 +132,7 @@ h2, h3 {
     grid-template-columns: repeat(20, 1fr); 
 }
 
-nav, main {
+nav, main, #sisyphus {
     border: #204888 2px solid;
     border-radius: 7px;
     background-color: black;
@@ -217,14 +217,43 @@ nav, main {
 
 #welcome {
     grid-row: 1;
-    grid-column: span 16; 
+    grid-column: span 16;
     height: max-content;
 }
 
-#links {
+.side-stack {
     grid-row: 1;
     grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+    align-self: stretch;
+    min-width: 0;
+    min-height: 0;
+}
+
+#links {
     height: max-content;
+}
+
+#sisyphus {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#sisyphus .window-title-bar {
+    position: relative;
+    z-index: 2;
+}
+
+#sisyphus .window-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 0;
 }
 
 #gifs {
@@ -281,6 +310,16 @@ nav, main {
     grid-column: span 10;
     align-self: start;
     height: max-content;
+}
+
+#webmeji-stage {
+    --stage-top: -20px;
+    --stage-bottom: -10px;
+    position: relative;
+    flex: 1;
+    min-height: 100px;
+    margin: var(--stage-top) -20px var(--stage-bottom);
+    overflow: hidden;
 }
 
 #neolink {

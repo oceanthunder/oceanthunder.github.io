@@ -1,0 +1,24 @@
+.webmeji-container {
+    position: absolute;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.webmeji-container img {
+    width: 100%;
+    height: auto;
+    user-select: none;
+    pointer-events: none;
+    display: block;
+    transform-origin: center;
+}
+
+@media (max-width: 768px) {
+    .webmeji-container {
+        width: 32px;
+        height: 32px;
+    }
+}
