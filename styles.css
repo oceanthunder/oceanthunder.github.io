@@ -479,11 +479,12 @@ nav, main {
 }
 
 #snail {
+  width: 100px;
+  height: 100px;
   border: #797c1d 2px solid;
   border-radius: 14px;
   position: relative; 
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-  background-image: url('assets/cloud.gif');
 }
 
 #snail:hover {
