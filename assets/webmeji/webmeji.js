@@ -363,20 +363,58 @@ class Creature {
   enablePetInteraction() {
     if(!this.spriteConfig.ALLOWANCES?.includes('pet') || !this.spriteConfig.ALLOWANCES?.includes('bottom')) return;
 
-    this.container.addEventListener('mouseenter',()=> {
-        if(this.isFalling||this.isPointerDown||this.isPetting||this.isJumping||this.currentEdge!=='bottom') return;
-        this.isPetting=true;
-        this.wasActionBeforePet=this.currentAction;
-        this.startPetAnimation();
-    });
-    this.container.addEventListener('mouseleave',()=> {
-        if(this.isFalling||this.isPointerDown||this.isJumping||this.currentEdge==='top') return;
-        this.isPetting=false;
-        this.stopPetAnimation();
+    this.pointer = { x: null, y: null };
+
+    const updatePointer = (e) => {
+      this.pointer.x = e.clientX;
+      this.pointer.y = e.clientY;
+    };
+    const clearPointer = () => {
+      this.pointer.x = null;
+      this.pointer.y = null;
+      this.setPetting(false);
+    };
+
+    this.host.addEventListener('mousemove', updatePointer);
+    this.host.addEventListener('mouseover', updatePointer);
+    this.host.addEventListener('mouseleave', clearPointer);
+    window.addEventListener('mouseout', (e) => {
+      if (!e.relatedTarget) clearPointer();
     });
   }
 
-  // dragging animation and pointer tracking
+  setPetting(shouldPet) {
+    if (shouldPet === this.isPetting) return;
+
+    if (shouldPet) {
+      if (this.isFalling || this.isPointerDown || this.isJumping ||
+          this.isDragging || this.currentEdge !== 'bottom') return;
+      this.isPetting = true;
+      this.wasActionBeforePet = this.currentAction;
+      this.startPetAnimation();
+    } else {
+      this.isPetting = false;
+      this.stopPetAnimation();
+    }
+  }
+
+  updatePetHover() {
+    if (!this.pointer || this.pointer.x == null) {
+      this.setPetting(false);
+      return;
+    }
+
+    const rect = this.container.getBoundingClientRect();
+    const pad = 6; 
+    const isHovering =
+      this.pointer.x >= rect.left - pad &&
+      this.pointer.x <= rect.right + pad &&
+      this.pointer.y >= rect.top - pad &&
+      this.pointer.y <= rect.bottom + pad;
+
+    this.setPetting(isHovering);
+  }
+
   enableDragInteraction() {
     if (!this.spriteConfig.ALLOWANCES?.includes('drag')) return;
     if (!this.spriteConfig.ALLOWANCES?.includes('bottom')) return;
@@ -394,7 +432,6 @@ class Creature {
         this.positionX = clientX - hostRect.left - offsetX;
         this.positionY = clientY - hostRect.top - offsetY;
 
-        // clamp to the host stage
         this.positionX = Math.max(0, Math.min(this.positionX, this.host.clientWidth - this.containerWidth));
         this.positionY = Math.max(0, Math.min(this.positionY, this.host.clientHeight - this.containerHeight));
 
@@ -769,6 +806,7 @@ class Creature {
         this.animationFrameId = requestAnimationFrame(this.animate);
         return;
     }
+    this.updatePetHover();
     const movingActions = ['walk', 'forced-walk', 'climbTop']; // add actions with horizontal movement here
     if (movingActions.includes(this.currentAction)) {
         const dx = this.direction * this.spriteConfig.walkspeed * delta;
