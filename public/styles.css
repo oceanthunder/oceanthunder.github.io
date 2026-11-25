@@ -13,6 +13,10 @@
   src: url('/assets/fonts/minecraft.ttf') format('truetype');
 }
 
+:root {
+  --sisyphus-height: 150px;
+}
+
 a, button {
   color: #FDFD96;
   text-decoration: none;
@@ -57,6 +61,10 @@ header {
 
 h1 {
 	margin: 0;
+}
+
+header h1 a:hover {
+  text-decoration: none;
 }
 
 h2, h3 {
@@ -153,15 +161,19 @@ nav, main, #sisyphus {
 }
 
 .window-title {
+    flex: 1 1 auto;
+    min-width: 0;
     margin: 0;
     color: #ADD8E6;
     font-size: 0.9rem;
     line-height: 1;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .window-icons {
     display: flex;
+    flex: 0 0 auto;
     gap: 3px;
 }
 
@@ -227,7 +239,7 @@ nav, main, #sisyphus {
     display: flex;
     flex-direction: column;
     gap: 21px;
-    align-self: stretch;
+    align-self: start;
     min-width: 0;
     min-height: 0;
 }
@@ -237,7 +249,8 @@ nav, main, #sisyphus {
 }
 
 #sisyphus {
-    flex: 1;
+    flex: none;
+    height: var(--sisyphus-height);
     display: flex;
     flex-direction: column;
     min-height: 0;
