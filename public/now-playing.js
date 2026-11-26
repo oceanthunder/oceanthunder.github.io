@@ -4,10 +4,13 @@
 	const USER = "oceanthunder";
 	const PROFILE = `https://listenbrainz.org/user/${encodeURIComponent(USER)}/`;
 	const API = "https://api.listenbrainz.org/1/";
-	const ART_API = "https://itunes.apple.com/search";
+	const ITUNES_API = "https://itunes.apple.com/search";
+	const SPOTIFY_OEMBED = "https://open.spotify.com/oembed";
+	const SOUNDCLOUD_OEMBED = "https://soundcloud.com/oembed";
 	const POLL_INTERVAL = 30000;
 	const LIVE_POLL_INTERVAL = 5000;
 	const REQUEST_TIMEOUT = 10000;
+	const MAX_ART_CACHE = 100;
 	const artCache = new Map();
 
 	const root = document.getElementById("now-playing");
@@ -28,6 +31,10 @@
 	let artRequest = 0;
 	let currentKey = "";
 	let hasContent = false;
+
+	el.art.onerror = () => {
+		el.art.hidden = true;
+	};
 
 	function setText(node, value) {
 		if (node.textContent !== value) {
@@ -114,11 +121,17 @@
 	function toTrack(listen, isPlaying) {
 		const meta = (listen && listen.track_metadata) || {};
 		const mapping = meta.mbid_mapping || {};
+		const additional = meta.additional_info || {};
 		const release = mapping.caa_release_mbid;
 		const artwork =
 			release && mapping.caa_id
 				? `https://archive.org/download/mbid-${release}/mbid-${release}-${mapping.caa_id}_thumb500.jpg`
 				: "";
+		const sourceUrls = Array.isArray(mapping.url_rels)
+			? mapping.url_rels
+					.map((rel) => rel && rel.url)
+					.filter((url) => typeof url === "string" && url)
+			: [];
 
 		return {
 			artist: meta.artist_name || "",
@@ -129,6 +142,10 @@
 				uts: listen && listen.listened_at ? String(listen.listened_at) : ""
 			},
 			artwork: artwork,
+			origin: typeof additional.origin_url === "string" ? additional.origin_url : "",
+			sourceUrls: sourceUrls,
+			releaseMbid: mapping.release_mbid || "",
+			releaseGroupMbid: mapping.release_group_mbid || "",
 			"@attr": { nowplaying: isPlaying ? "true" : "false" }
 		};
 	}
@@ -139,34 +156,131 @@
 			.normalize("NFKD")
 			.replace(/[\u0300-\u036f]/g, "")
 			.replace(/\([^)]*\)|\[[^\]]*\]/g, "")
-			.replace(/[^a-z0-9]+/g, " ")
+			.replace(/[^\p{L}\p{N}]+/gu, " ")
 			.trim();
 	}
 
-	async function pickArtwork(track, token) {
-		if (!track) {
-			return "";
+	function matches(a, b) {
+		if (!a || !b) {
+			return false;
 		}
 
-		if (track.artwork) {
-			return token === artRequest ? track.artwork : "";
+		if (a === b) {
+			return true;
 		}
 
-		const artist = normalize(text(track.artist));
-		const name = normalize(text(track.name));
-
-		if (!artist || !name) {
-			return "";
+		if (a.length < 4 || b.length < 4) {
+			return false;
 		}
 
-		const key = `${artist}|${name}`;
-		if (artCache.has(key)) {
-			return artCache.get(key);
+		return a.includes(b) || b.includes(a);
+	}
+
+	function trackSources(track) {
+		return [track.origin].concat(
+			Array.isArray(track.sourceUrls) ? track.sourceUrls : []
+		);
+	}
+
+	function oembedSources(track) {
+		const sources = trackSources(track);
+		const urls = [];
+		const seen = new Set();
+
+		sources.forEach((raw) => {
+			if (typeof raw !== "string" || !raw) {
+				return;
+			}
+
+			let parsed;
+			try {
+				parsed = new URL(raw);
+			} catch (error) {
+				return;
+			}
+
+			if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+				return;
+			}
+
+			const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+			let endpoint = "";
+
+			if (host === "spotify.com" || host.endsWith(".spotify.com")) {
+				if (/^\/(track|album|episode|show)\//.test(parsed.pathname)) {
+					endpoint = `${SPOTIFY_OEMBED}?url=${encodeURIComponent(parsed.toString())}`;
+				}
+			} else if (host === "soundcloud.com" || host.endsWith(".soundcloud.com")) {
+				if (parsed.pathname && parsed.pathname !== "/") {
+					endpoint = `${SOUNDCLOUD_OEMBED}?format=json&url=${encodeURIComponent(parsed.toString())}`;
+				}
+			}
+
+			if (endpoint && !seen.has(endpoint)) {
+				seen.add(endpoint);
+				urls.push(endpoint);
+			}
+		});
+
+		return urls;
+	}
+
+	function enlargeSpotifyArt(url) {
+		return url.replace(
+			/\/image\/ab67616d00001e02([0-9a-f]+)/i,
+			"/image/ab67616d0000b273$1"
+		);
+	}
+
+	function youtubeThumbnail(track) {
+		const sources = trackSources(track);
+
+		for (let i = 0; i < sources.length; i += 1) {
+			const raw = sources[i];
+			if (typeof raw !== "string" || !raw) {
+				continue;
+			}
+
+			let parsed;
+			try {
+				parsed = new URL(raw);
+			} catch (error) {
+				continue;
+			}
+
+			const host = parsed.hostname.toLowerCase().replace(/^www\./, "");
+			let id = "";
+
+			if (host === "youtu.be") {
+				id = parsed.pathname.slice(1);
+			} else if (host === "youtube.com" || host.endsWith(".youtube.com")) {
+				if (parsed.pathname === "/watch") {
+					id = parsed.searchParams.get("v") || "";
+				} else {
+					const parts = parsed.pathname.split("/");
+					if (
+						(parts[1] === "embed" ||
+							parts[1] === "shorts" ||
+							parts[1] === "live") &&
+						parts[2]
+					) {
+						id = parts[2];
+					}
+				}
+			}
+
+			if (/^[A-Za-z0-9_-]{11}$/.test(id)) {
+				return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+			}
 		}
 
-		const url = new URL(ART_API);
-		url.searchParams.set("term", `${artist} ${name}`);
-		url.searchParams.set("entity", "song");
+		return "";
+	}
+
+	async function searchItunesArt(query, track) {
+		const url = new URL(ITUNES_API);
+		url.searchParams.set("term", query.term);
+		url.searchParams.set("entity", query.entity);
 		url.searchParams.set("limit", "5");
 
 		try {
@@ -174,31 +288,32 @@
 			const results = Array.isArray(payload && payload.results)
 				? payload.results
 				: [];
+			const artist = normalize(text(track.artist));
+			const name = normalize(text(track.name));
 			const album = normalize(text(track.album));
-			let best = null;
-			let bestScore = 0;
+			const albumSearch = query.entity === "album";
+			let strict = null;
+			let strictScore = 0;
+			let loose = null;
+			let looseScore = 0;
 
 			results.forEach((item) => {
-				const itemArtist = normalize(item.artistName);
-				const itemName = normalize(item.trackName);
-				const itemAlbum = normalize(item.collectionName);
-				let score = 0;
+				if (!item || !item.artworkUrl100) {
+					return;
+				}
 
-				if (
-					itemArtist &&
-					(itemArtist === artist ||
-						artist.includes(itemArtist) ||
-						itemArtist.includes(artist))
-				) {
+				const itemArtist = normalize(item.artistName);
+				const itemName = normalize(
+					albumSearch ? item.collectionName : item.trackName
+				);
+				const itemAlbum = normalize(item.collectionName);
+				let score = 1;
+
+				if (matches(itemArtist, artist)) {
 					score += 3;
 				}
 
-				if (
-					itemName &&
-					(itemName === name ||
-						name.includes(itemName) ||
-						itemName.includes(name))
-				) {
+				if (matches(itemName, name)) {
 					score += 3;
 				}
 
@@ -206,55 +321,198 @@
 					score += 1;
 				}
 
-				if (item.artworkUrl100) {
-					score += 1;
+				if (score > strictScore) {
+					strictScore = score;
+					strict = item;
 				}
 
-				if (score > bestScore) {
-					bestScore = score;
-					best = item;
+				if (
+					artist &&
+					album &&
+					matches(itemArtist, artist) &&
+					itemAlbum === album &&
+					score > looseScore
+				) {
+					looseScore = score;
+					loose = item;
 				}
 			});
 
-			const artwork =
-				best && bestScore >= 7 && best.artworkUrl100
-					? best.artworkUrl100.replace(
-							/100x100bb\.(jpg|png)$/i,
-							"600x600bb.$1"
-						)
-					: "";
+			const best =
+				strictScore >= 7 ? strict : looseScore >= 5 ? loose : null;
 
-			artCache.set(key, artwork);
-			return token === artRequest ? artwork : "";
+			return best
+				? best.artworkUrl100.replace(
+						/100x100bb\.(jpg|png)$/i,
+						"600x600bb.$1"
+					)
+				: "";
 		} catch (error) {
 			return "";
 		}
 	}
 
-	function loadArtwork(url, alt, token) {
-		if (!url || token !== artRequest) {
-			return;
+	async function* artworkCandidates(track, token) {
+		const seen = new Set();
+		const unique = (url) => {
+			if (!url || typeof url !== "string" || seen.has(url)) {
+				return false;
+			}
+
+			seen.add(url);
+			return true;
+		};
+
+		const direct = [track.artwork];
+
+		if (track.releaseMbid) {
+			direct.push(
+				`https://coverartarchive.org/release/${encodeURIComponent(track.releaseMbid)}/front-500`
+			);
 		}
 
-		const loader = new Image();
+		if (track.releaseGroupMbid) {
+			direct.push(
+				`https://coverartarchive.org/release-group/${encodeURIComponent(track.releaseGroupMbid)}/front-500`
+			);
+		}
 
-		loader.onload = () => {
+		for (const url of direct) {
 			if (token !== artRequest) {
 				return;
 			}
 
-			el.art.src = url;
-			el.art.alt = alt;
-			el.art.hidden = false;
-		};
-
-		loader.onerror = () => {
-			if (token === artRequest) {
-				el.art.hidden = true;
+			if (unique(url)) {
+				yield url;
 			}
-		};
+		}
 
-		loader.src = url;
+		for (const source of oembedSources(track)) {
+			if (token !== artRequest) {
+				return;
+			}
+
+			let payload = null;
+			try {
+				payload = await getJSON(source);
+			} catch (error) {
+				continue;
+			}
+
+			if (token !== artRequest) {
+				return;
+			}
+
+			const thumbnail = payload && payload.thumbnail_url;
+			if (typeof thumbnail !== "string" || !/^https:\/\//i.test(thumbnail)) {
+				continue;
+			}
+
+			const large = enlargeSpotifyArt(thumbnail);
+			if (large !== thumbnail && unique(large)) {
+				yield large;
+			}
+
+			if (unique(thumbnail)) {
+				yield thumbnail;
+			}
+		}
+
+		const artist = text(track.artist);
+		const name = text(track.name);
+		const album = text(track.album);
+
+		if (normalize(artist) && normalize(name)) {
+			const queries = [
+				{ term: `${artist} ${name}`, entity: "song" }
+			];
+
+			if (album && normalize(album) !== normalize(name)) {
+				queries.push({ term: `${artist} ${album}`, entity: "album" });
+			}
+
+			for (const query of queries) {
+				if (token !== artRequest) {
+					return;
+				}
+
+				const artwork = await searchItunesArt(query, track);
+				if (token !== artRequest) {
+					return;
+				}
+
+				if (artwork && unique(artwork)) {
+					yield artwork;
+				}
+			}
+		}
+
+		if (token !== artRequest) {
+			return;
+		}
+
+		const youtube = youtubeThumbnail(track);
+		if (youtube && unique(youtube)) {
+			yield youtube;
+		}
+	}
+
+	function canLoad(url, token) {
+		return new Promise((resolve) => {
+			let timer = null;
+			let settled = false;
+
+			const done = (value) => {
+				if (settled) {
+					return;
+				}
+
+				settled = true;
+				if (timer !== null) {
+					clearTimeout(timer);
+				}
+
+				resolve(value);
+			};
+
+			const loader = new Image();
+			loader.onload = () => done(token === artRequest);
+			loader.onerror = () => done(false);
+			timer = setTimeout(() => done(false), REQUEST_TIMEOUT);
+			loader.src = url;
+		});
+	}
+
+	async function resolveArtwork(track, token) {
+		for await (const url of artworkCandidates(track, token)) {
+			if (token !== artRequest) {
+				return "";
+			}
+
+			if (await canLoad(url, token)) {
+				return url;
+			}
+		}
+
+		return "";
+	}
+
+	function cacheArtwork(key, url) {
+		if (artCache.size >= MAX_ART_CACHE) {
+			artCache.delete(artCache.keys().next().value);
+		}
+
+		artCache.set(key, url);
+	}
+
+	function showArtwork(url, alt, token) {
+		if (!url || token !== artRequest) {
+			return;
+		}
+
+		el.art.src = url;
+		el.art.alt = alt;
+		el.art.hidden = false;
 	}
 
 	function setLinks(track) {
@@ -298,20 +556,22 @@
 		el.artist.title = album ? `${artist} \u2014 ${album}` : artist;
 
 		const token = ++artRequest;
+		const cacheKey = [normalize(artist), normalize(name), normalize(album)].join(
+			"|"
+		);
 
 		el.art.hidden = true;
 
-		const artwork = await pickArtwork(track, token);
+		let artwork;
 
-		if (token !== artRequest) {
-			return;
-		}
-
-		if (artwork) {
-			loadArtwork(artwork, `${album || name} album art`, token);
+		if (artCache.has(cacheKey)) {
+			artwork = artCache.get(cacheKey);
 		} else {
-			el.art.hidden = true;
+			artwork = await resolveArtwork(track, token);
+			cacheArtwork(cacheKey, artwork);
 		}
+
+		showArtwork(artwork, `${album || name} album art`, token);
 	}
 
 	function renderEmpty() {
