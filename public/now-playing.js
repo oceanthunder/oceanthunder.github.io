@@ -1,13 +1,14 @@
 (() => {
 	"use strict";
 
-	const USER = "ocean_thunder";
-	const PROFILE = `https://www.last.fm/user/${encodeURIComponent(USER)}/`;
-	const API = "https://ws.audioscrobbler.com/2.0/";
-	const API_KEY = "0046f14e0bf5744a5557b78a95185e5e";
+	const USER = "oceanthunder";
+	const PROFILE = `https://listenbrainz.org/user/${encodeURIComponent(USER)}/`;
+	const API = "https://api.listenbrainz.org/1/";
+	const ART_API = "https://itunes.apple.com/search";
 	const POLL_INTERVAL = 30000;
+	const LIVE_POLL_INTERVAL = 5000;
 	const REQUEST_TIMEOUT = 10000;
-	const PLACEHOLDER_ART = "2a96cbd8b46e442fc41c2b86b821562f";
+	const artCache = new Map();
 
 	const root = document.getElementById("now-playing");
 	if (!root) {
@@ -54,11 +55,8 @@
 		}
 	}
 
-	function apiUrl(method, params) {
-		const url = new URL(API);
-		url.searchParams.set("method", method);
-		url.searchParams.set("api_key", API_KEY);
-		url.searchParams.set("format", "json");
+	function apiUrl(path, params) {
+		const url = new URL(API + path);
 
 		Object.keys(params).forEach((key) => {
 			url.searchParams.set(key, params[key]);
@@ -108,38 +106,129 @@
 		return value || "";
 	}
 
-	function firstTrack(payload) {
-		const tracks = payload && payload.recenttracks && payload.recenttracks.track;
-		if (!tracks) {
-			return null;
-		}
-
-		return Array.isArray(tracks) ? tracks[0] || null : tracks;
+	function firstListen(payload) {
+		const listens = payload && payload.payload && payload.payload.listens;
+		return Array.isArray(listens) ? listens[0] || null : null;
 	}
 
-	function isNowPlaying(track) {
-		return Boolean(
-			track &&
-				track["@attr"] &&
-				track["@attr"].nowplaying === "true"
-		);
+	function toTrack(listen, isPlaying) {
+		const meta = (listen && listen.track_metadata) || {};
+		const mapping = meta.mbid_mapping || {};
+		const release = mapping.caa_release_mbid;
+		const artwork =
+			release && mapping.caa_id
+				? `https://archive.org/download/mbid-${release}/mbid-${release}-${mapping.caa_id}_thumb500.jpg`
+				: "";
+
+		return {
+			artist: meta.artist_name || "",
+			name: meta.track_name || "",
+			album: meta.release_name || "",
+			url: PROFILE,
+			date: {
+				uts: listen && listen.listened_at ? String(listen.listened_at) : ""
+			},
+			artwork: artwork,
+			"@attr": { nowplaying: isPlaying ? "true" : "false" }
+		};
 	}
 
-	function pickArtwork(track) {
-		const images = Array.isArray(track && track.image) ? track.image : [];
-		const sizes = ["mega", "extralarge", "large", "medium", "small"];
+	function normalize(value) {
+		return String(value || "")
+			.toLowerCase()
+			.normalize("NFKD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/\([^)]*\)|\[[^\]]*\]/g, "")
+			.replace(/[^a-z0-9]+/g, " ")
+			.trim();
+	}
 
-		for (const size of sizes) {
-			const image = images.find(
-				(item) => item && item.size === size && item["#text"]
-			);
-
-			if (image && !image["#text"].includes(PLACEHOLDER_ART)) {
-				return image["#text"];
-			}
+	async function pickArtwork(track, token) {
+		if (!track) {
+			return "";
 		}
 
-		return "";
+		if (track.artwork) {
+			return token === artRequest ? track.artwork : "";
+		}
+
+		const artist = normalize(text(track.artist));
+		const name = normalize(text(track.name));
+
+		if (!artist || !name) {
+			return "";
+		}
+
+		const key = `${artist}|${name}`;
+		if (artCache.has(key)) {
+			return artCache.get(key);
+		}
+
+		const url = new URL(ART_API);
+		url.searchParams.set("term", `${artist} ${name}`);
+		url.searchParams.set("entity", "song");
+		url.searchParams.set("limit", "5");
+
+		try {
+			const payload = await getJSON(url.toString());
+			const results = Array.isArray(payload && payload.results)
+				? payload.results
+				: [];
+			const album = normalize(text(track.album));
+			let best = null;
+			let bestScore = 0;
+
+			results.forEach((item) => {
+				const itemArtist = normalize(item.artistName);
+				const itemName = normalize(item.trackName);
+				const itemAlbum = normalize(item.collectionName);
+				let score = 0;
+
+				if (
+					itemArtist &&
+					(itemArtist === artist ||
+						artist.includes(itemArtist) ||
+						itemArtist.includes(artist))
+				) {
+					score += 3;
+				}
+
+				if (
+					itemName &&
+					(itemName === name ||
+						name.includes(itemName) ||
+						itemName.includes(name))
+				) {
+					score += 3;
+				}
+
+				if (album && itemAlbum === album) {
+					score += 1;
+				}
+
+				if (item.artworkUrl100) {
+					score += 1;
+				}
+
+				if (score > bestScore) {
+					bestScore = score;
+					best = item;
+				}
+			});
+
+			const artwork =
+				best && bestScore >= 7 && best.artworkUrl100
+					? best.artworkUrl100.replace(
+							/100x100bb\.(jpg|png)$/i,
+							"600x600bb.$1"
+						)
+					: "";
+
+			artCache.set(key, artwork);
+			return token === artRequest ? artwork : "";
+		} catch (error) {
+			return "";
+		}
 	}
 
 	function loadArtwork(url, alt, token) {
@@ -177,7 +266,7 @@
 		}
 	}
 
-	function renderTrack(track, isPlaying) {
+	async function renderTrack(track, isPlaying) {
 		const artist = text(track.artist) || "Unknown artist";
 		const name = text(track.name) || "Unknown track";
 		const album = text(track.album) || "";
@@ -209,9 +298,14 @@
 		el.artist.title = album ? `${artist} \u2014 ${album}` : artist;
 
 		const token = ++artRequest;
-		const artwork = pickArtwork(track);
 
 		el.art.hidden = true;
+
+		const artwork = await pickArtwork(track, token);
+
+		if (token !== artRequest) {
+			return;
+		}
 
 		if (artwork) {
 			loadArtwork(artwork, `${album || name} album art`, token);
@@ -230,7 +324,7 @@
 
 		setText(el.status, "Off air");
 		setText(el.track, "Nothing playing right now");
-		setText(el.artist, "Check my profile on Last.fm");
+		setText(el.artist, "Check my profile on ListenBrainz");
 		setText(el.when, "");
 
 		el.track.title = "";
@@ -250,21 +344,27 @@
 
 	async function refresh() {
 		try {
-			const payload = await getJSON(
-				apiUrl("user.getrecenttracks", {
-					user: USER,
-					limit: "1"
-				})
-			);
+			const user = `user/${encodeURIComponent(USER)}`;
+			const [playingPayload, listensPayload] = await Promise.all([
+				getJSON(apiUrl(`${user}/playing-now`, {})),
+				getJSON(apiUrl(`${user}/listens`, { limit: "1" }))
+			]);
 
-			if (payload && payload.error) {
-				throw new Error(payload.message || `Last.fm error ${payload.error}`);
-			}
+			[playingPayload, listensPayload].forEach((payload) => {
+				if (payload && payload.error) {
+					throw new Error(
+						payload.error || `ListenBrainz error ${payload.code}`
+					);
+				}
+			});
 
-			const track = firstTrack(payload);
+			const playing = firstListen(playingPayload);
+			const recent = firstListen(listensPayload);
+			const listen = playing || recent;
 
-			if (track) {
-				renderTrack(track, isNowPlaying(track));
+			if (listen) {
+				const track = toTrack(listen, Boolean(playing));
+				await renderTrack(track, Boolean(playing));
 			} else {
 				renderEmpty();
 			}
@@ -278,7 +378,10 @@
 
 		if (!document.hidden) {
 			clearTimeout(timerId);
-			timerId = setTimeout(tick, POLL_INTERVAL);
+			const interval = root.classList.contains("is-playing")
+				? LIVE_POLL_INTERVAL
+				: POLL_INTERVAL;
+			timerId = setTimeout(tick, interval);
 		}
 	}
 
